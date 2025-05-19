@@ -1,0 +1,31 @@
+pip install moviepy numpy
+from moviepy.editor import *
+import numpy as np
+
+# 파일 경로 설정 (파일 이름은 네 PC에 맞게 조정)
+character_img_path = "file-LeYGcgfUw8euCsuZ1NuJ3m.png"  # 캐릭터 이미지
+bg_image_path = "A_2D_digital_illustration_depicts_a_Roblox-style_3.png"  # 배경 이미지
+music_path = "슈팅스타챌린지💫#shorts.mp3"  # 리믹스 음악
+
+# 영상 설정
+duration = 20  # 영상 길이 (초)
+video_size = (720, 1280)  # 세로 영상 사이즈
+
+# 클립 생성
+bg_clip = ImageClip(bg_image_path).set_duration(duration).resize(height=1280).set_position("center")
+character_clip = (
+    ImageClip(character_img_path)
+    .set_duration(duration)
+    .resize(height=600)
+    .set_position(("center", "center"))
+)
+
+# 오디오 클립 (20초만 사용)
+audio_clip = AudioFileClip(music_path).subclip(0, duration)
+
+# 최종 영상 합성
+final_video = CompositeVideoClip([bg_clip, character_clip]).set_duration(duration).resize(video_size)
+final_video = final_video.set_audio(audio_clip)
+
+# 영상 파일로 저장
+final_video.write_videofile("슈팅스타챌린지_겜욱_최종.mp4", fps=30)
